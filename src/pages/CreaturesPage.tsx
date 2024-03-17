@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Container, Drawer, Fab, Tooltip } from '@mui/material';
-import { TodoGrid } from '@/components/TodoGrid';
+import { TodoGrid } from '@/components/creature/TodoGrid';
 import { fetchCreatures } from '@/store/creatures';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -9,9 +9,9 @@ import { emptyCreature, openCreatureAddPanel } from '@/store/creatureEditor';
 
 import AddIcon from '@mui/icons-material/Add';
 
-import { DeleteCreatureConfirmModal } from '@/components/DeleteCreatureConfirmModal';
-import { EditCreature } from '@/components/EditCreature';
-import { AddCreature } from '@/components/AddCreature';
+import { DeleteCreatureConfirmModal } from '@/components/creature/DeleteCreatureConfirmModal';
+import { EditCreature } from '@/components/creature/EditCreature';
+import { AddCreature } from '@/components/creature/AddCreature';
 import {
   isAddModeSelector,
   isCreaturePanelOpenSelector,

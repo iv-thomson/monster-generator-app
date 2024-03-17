@@ -2,7 +2,7 @@ import { ChevronLeft } from '@mui/icons-material';
 import { Divider, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import { CreatureForm } from './CreatureForm';
-import { DrawerHeader } from './styled/DrawerHeader';
+import { DrawerHeader } from '../styled/DrawerHeader';
 import { RootState } from '@/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveCreature } from '@/store/creatures';
