@@ -18,12 +18,10 @@ export const Loader = (props: Props) => {
           <Card>
             <CardContent>
               <Stack spacing={2}>
-                <Skeleton variant='rectangular' width={200} height={200} />
+                <Skeleton variant='rectangular' width={232} height={232} />
                 <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
 
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
-                <Skeleton variant='text' sx={{ fontSize: '1rem' }} />
+                <Skeleton variant='rectangular' height={40} />
 
                 <Skeleton variant='rectangular' height={40} />
               </Stack>
