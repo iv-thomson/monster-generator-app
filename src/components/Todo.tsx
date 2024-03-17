@@ -1,5 +1,8 @@
 import { Creature } from '@/models';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   ButtonGroup,
   Card,
@@ -9,6 +12,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
 import { Stats } from './Stats';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -27,6 +31,13 @@ const HighlightableCard = styled(Card)(() => ({
   '&.highlighted': {
     'box-shadow': '0px 12px 12px 4px rgba(25, 118, 210, 0.2)',
   },
+}));
+
+const TypographyWithElipsis = styled(Typography)(({ width }) => ({
+  'white-space': ' nowrap',
+  overflow: ' hidden',
+  'text-overflow': ' ellipsis',
+  width: `${width}px`,
 }));
 
 export const Todo = ({ item }: Props) => {
@@ -63,11 +74,22 @@ export const Todo = ({ item }: Props) => {
             sx={{ objectPosition: 'top', borderRadius: '8px' }}
             image={item.image}
           />
-          <Typography gutterBottom variant='h6' component='div'>
+          <TypographyWithElipsis gutterBottom variant='h6' width={200}>
             {item.name}
-          </Typography>
+          </TypographyWithElipsis>
 
-          <Stats creature={item} />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls='panel1-content'
+              id='panel1-header'
+            >
+              Parameters
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stats creature={item} />
+            </AccordionDetails>
+          </Accordion>
 
           <ButtonGroup>
             <Button color='error' onClick={onDelete}>
