@@ -1,5 +1,6 @@
 import { Creature } from '@/models';
 import { Stack, TextField, styled } from '@mui/material';
+import { emptyCreature } from '@/store/creatureEditor';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CreaturePreviewImg } from './CreaturePreviewImg';
@@ -35,7 +36,7 @@ export const CreatureForm = (props: Props) => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues: props.defaultCreature });
+  } = useForm<Inputs>({ defaultValues: { ...emptyCreature } });
 
   useEffect(() => {
     reset(props.defaultCreature);

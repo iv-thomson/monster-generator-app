@@ -5,6 +5,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
   username: string;
@@ -17,6 +18,7 @@ export const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { error, loading } = useSelector(
@@ -25,6 +27,7 @@ export const LoginPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = data => {
     dispatch(login(data));
+    navigate('/');
   };
 
   return (

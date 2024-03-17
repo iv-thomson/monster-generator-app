@@ -15,15 +15,28 @@ export interface CreatureEditorState {
   entities: Creature[];
   loading: boolean;
   error: string | null;
+  highlightedItemId: string | null;
+  drawerLoading: boolean;
 }
+
+export const emptyCreature: Partial<Creature> = {
+  dexterity: 0,
+  strength: 0,
+  vitality: 0,
+  name: '',
+  image: '',
+  tags: [],
+};
 
 const initialState: CreatureEditorState = {
   creatureDrawerState: 'closed',
   isDeleteConfirmation: false,
-  formState: {},
+  formState: { ...emptyCreature },
   creatureToDelete: null,
   entities: [],
   loading: false,
+  highlightedItemId: null,
+  drawerLoading: false,
   error: null,
 };
 
@@ -64,6 +77,22 @@ export const creatureEditorSlice = createSlice({
     updateForm: (state, action) => {
       setFormState(state, action.payload);
     },
+    deleteCreatureLocally: (state, action) => {
+      state.entities = state.entities.filter(c => c.id !== action.payload);
+    },
+    updateCreatureLocally: (state, action) => {
+      state.entities = state.entities.map(c =>
+        c.id === action.payload.id ? action.payload : c,
+      );
+      state.highlightedItemId = action.payload.id;
+    },
+    addCreatureLocally: (state, action) => {
+      state.entities.push(action.payload);
+      state.highlightedItemId = action.payload.id;
+    },
+    removeCreatureHighlight: state => {
+      state.highlightedItemId = null;
+    },
   },
   extraReducers: builder => {
     fetchCreaturesController(builder);
@@ -80,4 +109,8 @@ export const {
   openDeleteConfirmation,
   closeDeleteConfirmation,
   close,
+  deleteCreatureLocally,
+  addCreatureLocally,
+  updateCreatureLocally,
+  removeCreatureHighlight,
 } = creatureEditorSlice.actions;

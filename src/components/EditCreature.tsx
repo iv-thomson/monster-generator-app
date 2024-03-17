@@ -12,7 +12,7 @@ import { close } from '@/store/creatureEditor';
 export const EditCreature = () => {
   const dispatch = useDispatch();
 
-  const { formState, loading } = useSelector(
+  const { formState, drawerLoading } = useSelector(
     (state: RootState) => state.creatureEditor,
   );
 
@@ -32,7 +32,7 @@ export const EditCreature = () => {
       <CreatureForm
         defaultCreature={formState}
         onSubmit={onSave}
-        loading={loading}
+        loading={drawerLoading}
       />
     </>
   );

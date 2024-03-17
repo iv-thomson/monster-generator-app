@@ -6,6 +6,12 @@ import type { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 const AUTH_TOKEN_KEY = 'authToken';
 
+export const handleUnauthorizedAccess = (state: LoginState) => {
+  state.token = null;
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+};
+
 export interface LoginState {
   loading: boolean;
   error: string | null;
@@ -61,6 +67,9 @@ export const loginSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    logout: state => {
+      handleUnauthorizedAccess(state);
+    },
   },
   extraReducers: builder => {
     loginController(builder);
@@ -68,4 +77,4 @@ export const loginSlice = createSlice({
 });
 
 export const loginReducer = loginSlice.reducer;
-export const { setToken } = loginSlice.actions;
+export const { setToken, logout } = loginSlice.actions;

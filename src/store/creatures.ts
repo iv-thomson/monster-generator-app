@@ -11,7 +11,16 @@ import {
   CreatureEditorState,
   close,
   closeDeleteConfirmation,
+  deleteCreatureLocally,
+  updateCreatureLocally,
 } from './creatureEditor';
+import { logout } from './login';
+
+const handleUnauthorized = (response: Response, thunkAPI) => {
+  if (response.status === 401) {
+    thunkAPI.dispatch(logout());
+  }
+};
 
 export const fetchCreatures = createAsyncThunk(
   'creatures/fetchCreatures',
@@ -30,9 +39,10 @@ export const deleteCreature = createAsyncThunk(
   async (id: string, thunkAPI) => {
     const response = await authenticatedDelete(`${APP_API}/creature/${id}`);
     if (!response.ok) {
+      handleUnauthorized(response, thunkAPI);
       throw new Error('Failed to delete creature with id ' + id);
     }
-    thunkAPI.dispatch(fetchCreatures());
+    thunkAPI.dispatch(deleteCreatureLocally(id));
     thunkAPI.dispatch(closeDeleteConfirmation());
 
     return id;
@@ -44,8 +54,10 @@ export const addCreature = createAsyncThunk(
   async (creature: Partial<Creature>, thunkAPI) => {
     const response = await authenticatedPost(`${APP_API}/creature`, creature);
     if (!response.ok) {
+      handleUnauthorized(response, thunkAPI);
       throw new Error('Failed to add creature');
     }
+
     thunkAPI.dispatch(fetchCreatures());
     thunkAPI.dispatch(close());
 
@@ -61,9 +73,10 @@ export const saveCreature = createAsyncThunk(
       creature,
     );
     if (!response.ok) {
+      handleUnauthorized(response, thunkAPI);
       throw new Error('Failed to save creature');
     }
-    thunkAPI.dispatch(fetchCreatures());
+    thunkAPI.dispatch(updateCreatureLocally(creature));
     thunkAPI.dispatch(close());
 
     return response;
@@ -110,14 +123,14 @@ export const addCreatureController = (
   builder: ActionReducerMapBuilder<CreatureEditorState>,
 ) => {
   builder.addCase(addCreature.pending, state => {
-    state.loading = true;
+    state.drawerLoading = true;
     state.error = null;
   });
   builder.addCase(addCreature.fulfilled, state => {
-    state.loading = false;
+    state.drawerLoading = false;
   });
   builder.addCase(addCreature.rejected, (state, action) => {
-    state.loading = false;
+    state.drawerLoading = false;
     state.error = action.error.message || 'Failed to add creature';
   });
 };
@@ -126,14 +139,14 @@ export const saveCreatureController = (
   builder: ActionReducerMapBuilder<CreatureEditorState>,
 ) => {
   builder.addCase(saveCreature.pending, state => {
-    state.loading = true;
+    state.drawerLoading = true;
     state.error = null;
   });
   builder.addCase(saveCreature.fulfilled, state => {
-    state.loading = false;
+    state.drawerLoading = false;
   });
   builder.addCase(saveCreature.rejected, (state, action) => {
-    state.loading = false;
+    state.drawerLoading = false;
     state.error = action.error.message || 'Failed to save creature';
   });
 };

@@ -5,10 +5,10 @@ import { fetchCreatures } from '@/store/creatures';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { styled } from '@mui/material/styles';
-import { openCreatureAddPanel } from '@/store/creatureEditor';
+import { emptyCreature, openCreatureAddPanel } from '@/store/creatureEditor';
 
 import AddIcon from '@mui/icons-material/Add';
-import { Creature } from '@/models';
+
 import { DeleteCreatureConfirmModal } from '@/components/DeleteCreatureConfirmModal';
 import { EditCreature } from '@/components/EditCreature';
 import { AddCreature } from '@/components/AddCreature';
@@ -20,13 +20,6 @@ import {
 import { Loader } from '@/components/Loader';
 
 const drawerWidth = 300;
-const emptyCreature: Partial<Creature> = {
-  dexterity: 0,
-  strength: 0,
-  vitality: 0,
-  name: '',
-  image: '',
-};
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<{
   open?: boolean;
@@ -56,7 +49,8 @@ export const CreaturesPage = () => {
   const isEdit = useSelector(isEditModeSelector);
   const isAdd = useSelector(isAddModeSelector);
 
-  const onCreateNew = () => dispatch(openCreatureAddPanel(emptyCreature));
+  const onCreateNew = () =>
+    dispatch(openCreatureAddPanel({ ...emptyCreature }));
 
   useEffect(() => {
     dispatch(fetchCreatures());

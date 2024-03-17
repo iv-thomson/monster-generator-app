@@ -7,20 +7,42 @@ import {
   CardMedia,
   Stack,
   Typography,
+  styled,
 } from '@mui/material';
 import { Stats } from './Stats';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   openCreatureEditor,
   openDeleteConfirmation,
+  removeCreatureHighlight,
 } from '@/store/creatureEditor';
+import { RootState } from '@/store/store';
+import { useEffect, useState } from 'react';
 
 type Props = {
   item: Creature;
 };
 
+const HighlightableCard = styled(Card)(() => ({
+  '&.highlighted': {
+    'box-shadow': '0px 12px 12px 4px rgba(25, 118, 210, 0.2)',
+  },
+}));
+
 export const Todo = ({ item }: Props) => {
+  const [isHighlighted, setIsHighlighted] = useState(false);
+
   const dispatch = useDispatch();
+  const highlightedId = useSelector(
+    (state: RootState) => state.creatureEditor.highlightedItemId,
+  );
+
+  useEffect(() => {
+    setIsHighlighted(highlightedId === item.id);
+    setTimeout(() => {
+      dispatch(removeCreatureHighlight());
+    }, 200);
+  }, [item, highlightedId]);
 
   const onEdit = () => {
     dispatch(openCreatureEditor(item));
@@ -31,7 +53,7 @@ export const Todo = ({ item }: Props) => {
   };
 
   return (
-    <Card>
+    <HighlightableCard className={isHighlighted ? 'highlighted' : ''}>
       <CardContent>
         <Stack spacing={2}>
           <CardMedia
@@ -55,6 +77,6 @@ export const Todo = ({ item }: Props) => {
           </ButtonGroup>
         </Stack>
       </CardContent>
-    </Card>
+    </HighlightableCard>
   );
 };
