@@ -14,13 +14,7 @@ import {
   deleteCreatureLocally,
   updateCreatureLocally,
 } from './creatureEditor';
-import { logout } from './login';
-
-const handleUnauthorized = (response: Response, thunkAPI) => {
-  if (response.status === 401) {
-    thunkAPI.dispatch(logout());
-  }
-};
+import { handleUnauthorized } from '@/core/auth';
 
 export const fetchCreatures = createAsyncThunk(
   'creatures/fetchCreatures',
