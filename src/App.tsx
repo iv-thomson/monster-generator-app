@@ -38,7 +38,7 @@ function App() {
                 Creatures dashboard
               </Link>
               <Link
-                to='/locations'
+                to='/location'
                 component={RouterLink}
                 color='inherit'
                 underline='hover'

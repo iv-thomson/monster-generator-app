@@ -18,6 +18,7 @@ import {
   isEditModeSelector,
 } from '@/selectors/creature';
 import { Loader } from '@/components/Loader';
+import { NoData } from '@/components/NoData';
 
 const drawerWidth = 300;
 
@@ -79,6 +80,9 @@ export const CreaturesPage = () => {
       </Drawer>
       <Main open={isOpen}>
         <Container sx={{ marginTop: '24px', my: 10 }}>
+          {!loading && entities.length === 0 && (
+            <NoData message='No creatures found' />
+          )}
           {loading ? (
             <Loader placeholderCount={10} />
           ) : (
