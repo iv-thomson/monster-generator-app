@@ -12,6 +12,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/login';
 
+const Logo = () => (
+  <Typography variant='h5' color='inherit' component='div'>
+    Monster generator
+  </Typography>
+);
+
 export const TopNav = () => {
   const dispatch = useDispatch();
   const onLogout = () => dispatch(logout());
@@ -21,9 +27,7 @@ export const TopNav = () => {
     return (
       <AppBar position='fixed'>
         <Toolbar variant='dense'>
-          <Typography variant='h5' color='inherit' component='div'>
-            Creature editor
-          </Typography>
+          <Logo />
         </Toolbar>
       </AppBar>
     );
@@ -38,10 +42,7 @@ export const TopNav = () => {
           justifyContent='space-between'
         >
           <Stack direction='row' spacing={2} alignItems='center'>
-            <Typography variant='h5' color='inherit' component='div'>
-              Creature editor
-            </Typography>
-
+            <Logo />
             <Link
               to='/'
               component={RouterLink}
