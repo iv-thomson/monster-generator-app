@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Container, Drawer, Fab, Tooltip } from '@mui/material';
-import { TodoGrid } from '@/components/creature/TodoGrid';
+import { CreatureGrid } from '@/components/creature/CreatureGrid';
 import { fetchCreatures } from '@/store/creatures';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -86,7 +86,7 @@ export const CreaturesPage = () => {
           {loading ? (
             <Loader placeholderCount={10} />
           ) : (
-            <TodoGrid items={entities} />
+            <CreatureGrid items={entities} />
           )}
         </Container>
       </Main>

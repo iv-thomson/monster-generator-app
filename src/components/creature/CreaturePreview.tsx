@@ -40,7 +40,7 @@ const TypographyWithElipsis = styled(Typography)(({ width }) => ({
   width: `${width}px`,
 }));
 
-export const Todo = ({ item }: Props) => {
+export const CreaturePreview = ({ item }: Props) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   const dispatch = useDispatch();
